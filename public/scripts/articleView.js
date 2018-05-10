@@ -56,7 +56,7 @@ var app = app || {};
       publishedOn: new Date().toISOString()
     });
 
-    $('#articles').append(article.toHtml());
+    $('.blog-posts').append(article.toHtml());
     $('pre code').each((i, block) => hljs.highlightBlock(block));
   };
 
@@ -81,7 +81,7 @@ var app = app || {};
 
 
   articleView.initIndexPage = () => {
-    app.Article.all.forEach(a => $('#articles').append(a.toHtml()));
+    app.Article.all.forEach(a => $('.blog-posts').append(a.toHtml()));
     articleView.handleMainNav();
     articleView.setTeasers();
     $('pre code').each((i, block) => hljs.highlightBlock(block));
