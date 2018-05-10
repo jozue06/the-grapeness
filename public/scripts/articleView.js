@@ -9,7 +9,7 @@ var app = app || {};
     $('.main-nav').on('click', '.tab', function(e) {
       e.preventDefault();
       $('.tab-content').hide();
-      $(`#${$(this).data('content')}`).fadeIn();
+      $(`#${$(this).data('content')}`).fadeIn(1000);
     });
 
     $('.main-nav .tab:first').click();
@@ -33,7 +33,7 @@ var app = app || {};
   };
 
   articleView.initNewArticlePage = () => {
-    $('.tab-content').show();
+    $('.tab-content').fadeIn(1000);
     $('#export-field').hide();
     $('#article-json').on('focus', function(){
       this.select();
