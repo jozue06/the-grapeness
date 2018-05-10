@@ -1,12 +1,10 @@
 'use strict';
-// REVIEW: Check out all of our new arrow function syntax!
 
 const pg = require('pg');
-const fs = require('fs');
 const express = require('express');
 const PORT = process.env.PORT || 3000;
 const app = express();
-const conString = 'postgres://localhost:5432/lab10';
+const conString = 'postgres://localhost:5432/grapeness';
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => {
@@ -120,39 +118,39 @@ app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
 
 //////// ** DATABASE LOADERS ** ////////
 ////////////////////////////////////////
-function loadAuthors() {
-  // fs.readFile('./public/data/hackerIpsum.json', 'utf8', (err, fd) => {
-  //   JSON.parse(fd).forEach(ele => {
-  client.query(
-    'INSERT INTO authors(author) VALUES($1) ON CONFLICT DO NOTHING'
-    ,[author]
-  )
-    .catch(console.error);
-  //   })
-  // })
-}
+// function loadAuthors() {
+//   // fs.readFile('./public/data/hackerIpsum.json', 'utf8', (err, fd) => {
+//   //   JSON.parse(fd).forEach(ele => {
+//   client.query(
+//     'INSERT INTO authors(author) VALUES($1) ON CONFLICT DO NOTHING'
+//     ,[author]
+//   )
+//     .catch(console.error);
+//   //   })
+//   // })
+// }
 
-function loadArticles() {
-  client.query('SELECT COUNT(*) FROM articles')
-    .then(result => {
-      if(!parseInt(result.rows[0].count)) {
-        fs.readFile('./public/data/hackerIpsum.json', 'utf8', (err, fd) => {
-          JSON.parse(fd).forEach(ele => {
-            client.query(`
-            INSERT INTO
-            articles(author_id, title, category, "publishedOn", body)
-            SELECT author_id, $1, $2, $3, $4
-            FROM authors
-            WHERE author=$5;
-          `,
-            [ele.title, ele.category, ele.publishedOn, ele.body, ele.author]
-            )
-              .catch(console.error);
-          })
-        })
-      }
-    })
-}
+// function loadArticles() {
+//   client.query('SELECT COUNT(*) FROM articles')
+//     .then(result => {
+//       if(!parseInt(result.rows[0].count)) {
+//         fs.readFile('./public/data/hackerIpsum.json', 'utf8', (err, fd) => {
+//           JSON.parse(fd).forEach(ele => {
+//             client.query(`
+//             INSERT INTO
+//             articles(author_id, title, category, "publishedOn", body)
+//             SELECT author_id, $1, $2, $3, $4
+//             FROM authors
+//             WHERE author=$5;
+//           `,
+//             [ele.title, ele.category, ele.publishedOn, ele.body, ele.author]
+//             )
+//               .catch(console.error);
+//           })
+//         })
+//       }
+//     })
+// }
 
 function loadDB() {
   client.query(`
@@ -163,7 +161,7 @@ function loadDB() {
       
     );`
   )
-    .then(loadAuthors)
+    // .then(loadAuthors)
     .catch(console.error);
 
   client.query(`
@@ -177,6 +175,6 @@ function loadDB() {
       body TEXT NOT NULL
     );`
   )
-    .then(loadArticles)
+    // .then(loadArticles)
     .catch(console.error);
 }
