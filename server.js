@@ -4,7 +4,7 @@ const pg = require('pg');
 const express = require('express');
 const PORT = process.env.PORT || 3000;
 const app = express();
-const conString = 'postgres://localhost:5432/grapeness';
+const conString = 'postgres://puhtrpayobbuys:5cfd1e491aeca707599933f1b86ca865e8ee4b8cb443eab04d6bb6b15f683b7f@ec2-54-163-240-54.compute-1.amazonaws.com:5432/duq56jm1ao1o1s';
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => {
