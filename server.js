@@ -1,12 +1,14 @@
 'use strict';
 
 const pg = require('pg');
+const cors = require('cors')
 const express = require('express');
 const PORT = process.env.PORT || 3000;
 const app = express();
-const conString = 'postgres://puhtrpayobbuys:5cfd1e491aeca707599933f1b86ca865e8ee4b8cb443eab04d6bb6b15f683b7f@ec2-54-163-240-54.compute-1.amazonaws.com:5432/duq56jm1ao1o1s';
-const client = new pg.Client(conString);
+const DATABASE_URL = 'postgres://hoefkdtgjxbkaz:b8c1c096a186195f6cd7a669d00fd9fab02eb9e787969112e60c492331cd4a0c@ec2-54-83-19-244.compute-1.amazonaws.com:5432/d91jbt4nia47q7'
+const client = new pg.Client(DATABASE_URL);
 client.connect();
+
 client.on('error', err => {
   console.error(err);
 });
@@ -14,6 +16,8 @@ client.on('error', err => {
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('./public'));
+
+app.use(cors());
 
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 
